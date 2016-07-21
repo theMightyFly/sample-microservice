@@ -19,15 +19,19 @@ package de.schaeftlein.aqua.domain;
 
 import java.util.Date;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 
 public class WaterQuality {
 
-	@Id private String id;
+	@Id 
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private String id;
 	
-	@JsonFormat(pattern="yyyy-MM-dd HH:MM:ss.SSS")
+	@CreatedDate
 	private Date measureTime;
 	
 	/**  NO3 mg/l (=ppm) */

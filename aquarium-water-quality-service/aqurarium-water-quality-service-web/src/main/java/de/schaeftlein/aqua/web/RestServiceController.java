@@ -20,6 +20,8 @@ package de.schaeftlein.aqua.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,8 +35,19 @@ public class RestServiceController {
 	@Autowired
 	private WaterQualityRepository waterQualityRepository;
 
-	@RequestMapping(method = { RequestMethod.GET }, value = "/waterQuality")
+	@RequestMapping(value="/waterQualityService/{id}",method = { RequestMethod.DELETE })
+	public void delete(@PathVariable("id") String pID){
+		waterQualityRepository.delete(pID);
+	}
+	
+	@RequestMapping(value="/waterQualityService",method = { RequestMethod.GET })
 	public List<WaterQuality> getAllMeasureValues() {
 		return waterQualityRepository.findAll();
+	}
+	
+	@RequestMapping(value="/waterQualityService",method = { RequestMethod.POST })
+	public WaterQuality save( @RequestBody WaterQuality pInput){
+		WaterQuality result = waterQualityRepository.save(pInput);
+		return result;
 	}
 }
