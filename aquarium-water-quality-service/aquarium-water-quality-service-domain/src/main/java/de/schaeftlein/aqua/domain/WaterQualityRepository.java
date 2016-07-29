@@ -22,7 +22,9 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+@RepositoryRestResource(collectionResourceRel = "waterQuality", path = "rest/waterQuality")
 public interface WaterQualityRepository extends MongoRepository<WaterQuality, String> {
 	List<WaterQuality> findByMeasureTime(@Param("measureTime") Date pDate);
 }

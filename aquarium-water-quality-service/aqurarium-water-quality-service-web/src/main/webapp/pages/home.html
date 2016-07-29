@@ -1,0 +1,124 @@
+
+<div style="padding-bottom: 50px" ng-controller="homeController"
+	class="jumbotron text-center">
+	<h2>Overview</h2>
+
+	<table style="width: 100%">
+		<tr>
+			<td colspan="2" style="width: 100%; padding: 10px;">
+				<div class="alert alert-info" role="alert">{{alert}}</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 45%; padding-left: 40px; vertical-align: top">
+				<div style="padding-bottom: 20px">
+					<h3>Add a new Water Quality Measurement</h3>
+				</div>
+				<form class="form-horizontal" role="form"
+					ng-submit="saveNewMeasurement()">
+					<div class="form-group">
+						<label class="col-md-4 control-label">Nitrate</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" name="nitrate"
+								ng-model="nitrate" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label">Nitrite</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" name="nitrite"
+								ng-model="nitrite" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label">total Hardness</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" name="totalHardness"
+								ng-model="totalHardness" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label">carbonate Hardness</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" name="carbonateHardness"
+								ng-model="carbonateHardness" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label">PH</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" name="ph" ng-model="ph" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label">chlorine</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" name="chlorine"
+								ng-model="chlorine" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div style="float: right; padding-right: 30%">
+							<input type="submit" value="save" class="btn btn-primary" />
+						</div>
+					</div>
+				</form>
+			</td>
+			<td style="vertical-align: top">
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th ng-click="sort('measureTime')">measure Time <span
+								class="glyphicon sort-icon" ng-show="sortKey=='measureTime'"
+								ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th ng-click="sort('nitrate')">nitrate <span
+								class="glyphicon sort-icon" ng-show="sortKey=='nitrate'"
+								ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th ng-click="sort('nitrite')">nitrite <span
+								class="glyphicon sort-icon" ng-show="sortKey=='nitrite'"
+								ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th ng-click="sort('totalHardness')">total Hardness <span
+								class="glyphicon sort-icon" ng-show="sortKey=='totalHardness'"
+								ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th ng-click="sort('carbonateHardness')">carbonate Hardness
+								<span class="glyphicon sort-icon"
+								ng-show="sortKey=='carbonateHardness'"
+								ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th ng-click="sort('ph')">ph <span
+								class="glyphicon sort-icon" ng-show="sortKey=='ph'"
+								ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th ng-click="sort('chlorine')">chlorine <span
+								class="glyphicon sort-icon" ng-show="sortKey=='chlorine'"
+								ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th>action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr
+							dir-paginate="x in waterQuality | orderBy:sortKey:reverse|itemsPerPage:5">
+							<td data-title="'measure Time'" sortable="'measureTime'">{{x.measureTime}}</td>
+							<td data-title="'nitrate'" sortable="'nitrate'">{{x.nitrate}}</td>
+							<td data-title="'nitrite'" sortable="'nitrite'">{{x.nitrite}}</td>
+							<td data-title="'totalHardness'" sortable="'totalHardness'">{{x.totalHardness}}</td>
+							<td data-title="'carbonate Hardness'"
+								sortable="'carbonateHardness'">{{x.carbonateHardness}}</td>
+							<td data-title="'ph'" sortable="'ph'">{{x.ph}}</td>
+							<td data-title="'chlorine'" sortable="'chlorine'">{{x.chlorine}}</td>
+							<td data-title="'Action'"><input type="button"
+								value="Remove" class="btn btn-primary"
+								ng-click="removeRow(x.id)" /></td>
+						</tr>
+					</tbody>
+				</table> <dir-pagination-controls max-size="5" direction-links="true"
+					boundary-links="true"> </dir-pagination-controls>
+			</td>
+		</tr>
+	</table>
+</div>

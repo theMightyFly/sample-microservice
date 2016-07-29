@@ -2,154 +2,57 @@
 <html ng-app="WaterQualityServiceApp">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width">
-	<title>Waterquality Service</title>
-	<!-- CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width">
+<title>Waterquality Service</title>
+<!-- CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-	<!-- JS Libs -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-resource.js"></script>
-	
-	<!-- JS Application-->
-	<script src="scripts/app.js"></script>
-	<script src="scripts/services.js"></script>
-	<script src="scripts/controller.js"></script>
+<!-- JS Libs -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7//angular-route.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-resource.js"></script>
+
+<!-- libs -->
+<script src="/dirPagination.js"></script>	
+
+<!-- JS Application-->
+<script src="scripts/app.js"></script>
+<script src="scripts/services.js"></script>
+<script src="scripts/controller.js"></script>
 </head>
 
-<body ng-controller="HttpController">
-	<div style="padding: 20px 0px 5px 0px">
-		<h3>Waterquality Service</h3>
+<body ng-controller="homeController">
+	<!-- navigation and header -->
+	<header>
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Waterquality service</a>
+				</div>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#/"><i class="fa fa-home"></i> Home</a></li>
+					<li><a href="#/reports"><i class="fa fa-shield"></i>
+							Reports</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<!-- content with injected views -->
+	<div id="main">
+		<!-- main -->
+		<div ng-view></div>
 	</div>
-	<div style="padding-bottom: 50px">
-		<table style="width: 100%">
-			<tr>
-				<td colspan="2" style="width: 100%; padding: 10px;">
-					<div class="alert alert-info" role="alert">{{message}}</div>
-				</td>
-			</tr>
-			<tr>
-				<td style="width: 45%; padding-left: 40px; vertical-align: top">
-					<div style="padding-bottom: 20px">
-						<h3>Add a new Water Quality Measurement</h3>
-					</div>
-					<form class="form-horizontal" role="form" ng-submit="saveNewMeasurement()">
-						<div class="form-group">
-							<label class="col-md-4 control-label">Nitrate</label>
-							<div class="col-md-5">
-								<input type="text" class="form-control" name="nitrate" ng-model="nitrate" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4 control-label">Nitrite</label>
-							<div class="col-md-5">
-								<input type="text" class="form-control" name="nitrite" ng-model="nitrite" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4 control-label">total Hardness</label>
-							<div class="col-md-5">
-								<input type="text" class="form-control" name="totalHardness" ng-model="totalHardness" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4 control-label">carbonate Hardness</label>
-							<div class="col-md-5">
-								<input type="text" class="form-control" name="carbonateHardness" ng-model="carbonateHardness" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4 control-label">PH</label>
-							<div class="col-md-5">
-								<input type="text" class="form-control" name="ph" ng-model="ph" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4 control-label">chlorine</label>
-							<div class="col-md-5">
-								<input type="text" class="form-control" name="chlorine" ng-model="chlorine" />
-							</div>
-						</div>
-						<div class="form-group">
-							<div style="float: right; padding-right: 30%">
-								<input type="submit" value="save" class="btn btn-primary" />
-							</div>
-						</div>
-					</form>
-				</td>
-				<td style="vertical-align: top">
-					<table class="table table-bordered table-striped">
-						<thead>
-							<tr>
-								<th><a href="#" ng-click="sortType = 'measureTime'; sortReverse = !sortReverse">
-										Measure Time <span
-										ng-show="sortType == 'measureTime' && !sortReverse"
-										class="fa fa-caret-down"></span> <span
-										ng-show="sortType == 'measureTime' && sortReverse"
-										class="fa fa-caret-up"></span>
-								</a></th>
-								<th><a href="#" ng-click="sortType = 'nitrate'; sortReverse = !sortReverse">
-										nitrate <span ng-show="sortType == 'nitrate' && !sortReverse"
-										class="fa fa-caret-down"></span> <span
-										ng-show="sortType == 'nitrate' && sortReverse"
-										class="fa fa-caret-up"></span>
-								</a></th>
-								<th><a href="#" ng-click="sortType = 'nitrite'; sortReverse = !sortReverse">
-										nitrite <span ng-show="sortType == 'nitrite' && !sortReverse"
-										class="fa fa-caret-down"></span> <span
-										ng-show="sortType == 'nitrite' && sortReverse"
-										class="fa fa-caret-up"></span>
-								</a></th>
-								<th><a href="#" ng-click="sortType = 'totalHardness'; sortReverse = !sortReverse">
-										total Hardness <span
-										ng-show="sortType == 'totalHardness' && !sortReverse"
-										class="fa fa-caret-down"></span> <span
-										ng-show="sortType == 'totalHardness' && sortReverse"
-										class="fa fa-caret-up"></span>
-								</a></th>
-								<th><a href="#" ng-click="sortType = 'carbonateHardness'; sortReverse = !sortReverse">
-										carbonateHardness <span
-										ng-show="sortType == 'carbonateHardness' && !sortReverse"
-										class="fa fa-caret-down"></span> <span
-										ng-show="sortType == 'carbonateHardness' && sortReverse"
-										class="fa fa-caret-up"></span>
-								</a></th>
-								<th><a href="#" ng-click="sortType = 'ph'; sortReverse = !sortReverse"> ph
-										<span ng-show="sortType == 'ph' && !sortReverse"
-										class="fa fa-caret-down"></span> <span
-										ng-show="sortType == 'ph' && sortReverse"
-										class="fa fa-caret-up"></span>
-								</a></th>
-								<th><a href="#" ng-click="sortType = 'chlorine'; sortReverse = !sortReverse">
-										chlorine <span
-										ng-show="sortType == 'chlorine' && !sortReverse"
-										class="fa fa-caret-down"></span> <span
-										ng-show="sortType == 'chlorine' && sortReverse"
-										class="fa fa-caret-up"></span>
-								</a></th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="x in waterquality | orderBy:sortType:sortReverse">
-								<td>{{x.measureTime}}</td>
-								<td>{{x.nitrate}}</td>
-								<td>{{x.nitrite}}</td>
-								<td>{{x.totalHardness}}</td>
-								<td>{{x.carbonateHardness}}</td>
-								<td>{{x.ph}}</td>
-								<td>{{x.chlorine}}</td>
-								<td><input type="button" value="Remove" class="btn btn-primary" ng-click="removeRow(x.id)" /></td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</table>
-	</div>
+
 </body>
 
 </html>
